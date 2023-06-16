@@ -7,6 +7,12 @@ import tree_sitter
 from tree_sitter import Language, Parser
 import codecs
 
+#Функция считывания файла
+def file_inner(path):
+    with codecs.open(path, 'r', 'utf-8') as file:
+        code = file.read()
+    return code
+
 #Удаление комментариев в коде, whitespace, приведение к одной строке
 def cleaner1(code):
     ## Remove code comments
@@ -57,9 +63,6 @@ def main():
     # Удаление дубликатов (если есть)
     if len(duplicateRows) > 0:
         df = df.drop_duplicates().reset_index(drop=True)
-
-    # Удаление лишних столбцов
-    df = df[['Snippet', 'Target']]
 
     # Делим данные на тренировочную, тестовую и валидационную выборки
     train, test = train_test_split(df, test_size=0.3, random_state=42)
