@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 
 # Загрузка датасета в Pandas
-df = pd.read_csv('data/df_cs_culs.csv')
+df = pd.read_csv('data/df_cs_vuls.csv')
 
 # Проверим наличие дубликатов
 duplicateRows = df[df.duplicated()]
