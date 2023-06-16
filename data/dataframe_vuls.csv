@@ -1,0 +1,4867 @@
+Snippet,Target
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Connect_tcp_71a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-71a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Connect_tcp Read data using an outbound tcp connection
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 71 Data flow: data passed as an Object reference argument from one method to another in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+using System.IO;
+using System.Net.Sockets;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__Connect_tcp_71a : AbstractTestCase
+{
+#if (!OMITBAD)
+    public override void Bad()
+    {
+        string data;
+        data = """"; /* Initialize data */
+        /* Read data using an outbound tcp connection */
+        {
+            try
+            {
+                /* Read data using an outbound tcp connection */
+                using (TcpClient tcpConn = new TcpClient(""host.example.org"", 39544))
+                {
+                    /* read input from socket */
+                    using (StreamReader sr = new StreamReader(tcpConn.GetStream()))
+                    {
+                        /* POTENTIAL FLAW: Read data using an outbound tcp connection */
+                        data = sr.ReadLine();
+                    }
+                }
+            }
+            catch (IOException exceptIO)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptIO, ""Error with stream reading"");
+            }
+        }
+        CWE15_External_Control_of_System_or_Configuration_Setting__Connect_tcp_71b.BadSink((Object)data  );
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good()
+    {
+        GoodG2B();
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private static void GoodG2B()
+    {
+        string data;
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        CWE15_External_Control_of_System_or_Configuration_Setting__Connect_tcp_71b.GoodG2BSink((Object)data  );
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_53b.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-53b.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Params_Get_Web Read data from a querystring using Params.Get()
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 53 Data flow: data passed as an argument from one method through two others to a fourth; all four functions are in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_53b
+{
+#if (!OMITBAD)
+    public static void BadSink(string data , HttpRequest req, HttpResponse resp)
+    {
+        CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_53c.BadSink(data , req, resp);
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(string data , HttpRequest req, HttpResponse resp)
+    {
+        CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_53c.GoodG2BSink(data , req, resp);
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_66a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-66a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Params_Get_Web Read data from a querystring using Params.Get()
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 66 Data flow: data passed in an array from one method to another in different source files in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_66a : AbstractTestCaseWeb
+{
+#if (!OMITBAD)
+    public override  void Bad(HttpRequest req, HttpResponse resp)
+    {
+        string data;
+        /* POTENTIAL FLAW: Read data from a querystring using Params.Get */
+        data = req.Params.Get(""name"");
+        string[] dataArray = new string[5];
+        dataArray[2] = data;
+        CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_66b.BadSink(dataArray , req, resp );
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good(HttpRequest req, HttpResponse resp)
+    {
+        GoodG2B(req, resp);
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private static void GoodG2B(HttpRequest req, HttpResponse resp)
+    {
+        string data;
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        string[] dataArray = new string[5];
+        dataArray[2] = data;
+        CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_66b.GoodG2BSink(dataArray , req, resp );
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_02.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-02.tmpl.cs
+*/
+/*
+* @description
+* CWE: 15 External Control of System or Configuration Setting
+* BadSource: ReadLine Read data from the console using ReadLine()
+* GoodSource: A hardcoded string
+* BadSink:  Set the catalog name with the value of data
+* Flow Variant: 02 Control flow: if(true) and if(false)
+*
+* */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+using System.IO;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_02 : AbstractTestCase
+{
+#if (!OMITBAD)
+    /* uses badsource and badsink */
+    public override void Bad()
+    {
+        string data;
+        if (true)
+        {
+            data = """"; /* Initialize data */
+            {
+                /* read user input from console with ReadLine */
+                try
+                {
+                    /* POTENTIAL FLAW: Read data from the console using ReadLine */
+                    data = Console.ReadLine();
+                }
+                catch (IOException exceptIO)
+                {
+                    IO.Logger.Log(NLog.LogLevel.Warn, exceptIO, ""Error with stream reading"");
+                }
+            }
+        }
+        else
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    /* goodG2B1() - use goodsource and badsink by changing true to false */
+    private void GoodG2B1()
+    {
+        string data;
+        if (false)
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        else
+        {
+            /* FIX: Use a hardcoded string */
+            data = ""foo"";
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+
+    /* GoodG2B2() - use goodsource and badsink by reversing statements in if */
+    private void GoodG2B2()
+    {
+        string data;
+        if (true)
+        {
+            /* FIX: Use a hardcoded string */
+            data = ""foo"";
+        }
+        else
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+
+    public override void Good()
+    {
+        GoodG2B1();
+        GoodG2B2();
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_66b.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-66b.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: ReadLine Read data from the console using ReadLine()
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 66 Data flow: data passed in an array from one method to another in different source files in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_66b
+{
+#if (!OMITBAD)
+    public static void BadSink(string[] dataArray )
+    {
+        string data = dataArray[2];
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(string[] dataArray )
+    {
+        string data = dataArray[2];
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Environment_66a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-66a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Environment Read data from an environment variable
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 66 Data flow: data passed in an array from one method to another in different source files in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__Environment_66a : AbstractTestCase
+{
+#if (!OMITBAD)
+    public override  void Bad()
+    {
+        string data;
+        /* get environment variable ADD */
+        /* POTENTIAL FLAW: Read data from an environment variable */
+        data = Environment.GetEnvironmentVariable(""ADD"");
+        string[] dataArray = new string[5];
+        dataArray[2] = data;
+        CWE15_External_Control_of_System_or_Configuration_Setting__Environment_66b.BadSink(dataArray  );
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good()
+    {
+        GoodG2B();
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private static void GoodG2B()
+    {
+        string data;
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        string[] dataArray = new string[5];
+        dataArray[2] = data;
+        CWE15_External_Control_of_System_or_Configuration_Setting__Environment_66b.GoodG2BSink(dataArray  );
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Environment_22a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-22a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Environment Read data from an environment variable
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 22 Control flow: Flow controlled by value of a public static variable. Sink functions are in a separate file from sources.
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Environment_22a : AbstractTestCase
+{
+
+    /* The public static variable below is used to drive control flow in the source function.
+     * The public static variable mimics a global variable in the C/C++ language family. */
+    public static bool badPublicStatic = false;
+#if (!OMITBAD)
+    public override void Bad()
+    {
+        string data;
+        badPublicStatic = true;
+        data = CWE15_External_Control_of_System_or_Configuration_Setting__Environment_22b.BadSource();
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif //omitbad
+    /* The public static variables below are used to drive control flow in the source functions.
+     * The public static variable mimics a global variable in the C/C++ language family. */
+    public static bool goodG2B1PublicStatic = false;
+    public static bool GoodG2B2PublicStatic = false;
+#if (!OMITGOOD)
+    public override void Good()
+    {
+        GoodG2B1();
+        GoodG2B2();
+    }
+
+    /* goodG2B1() - use goodsource and badsink by setting the static variable to false instead of true */
+    private void GoodG2B1()
+    {
+        string data;
+        goodG2B1PublicStatic = false;
+        data = CWE15_External_Control_of_System_or_Configuration_Setting__Environment_22b.GoodG2B1Source();
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+
+    /* GoodG2B2() - use goodsource and badsink by reversing the blocks in the if in the sink function */
+    private void GoodG2B2()
+    {
+        string data;
+        GoodG2B2PublicStatic = true;
+        data = CWE15_External_Control_of_System_or_Configuration_Setting__Environment_22b.GoodG2B2Source();
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Environment_05.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-05.tmpl.cs
+*/
+/*
+* @description
+* CWE: 15 External Control of System or Configuration Setting
+* BadSource: Environment Read data from an environment variable
+* GoodSource: A hardcoded string
+* BadSink:  Set the catalog name with the value of data
+* Flow Variant: 05 Control flow: if(privateTrue) and if(privateFalse)
+*
+* */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__Environment_05 : AbstractTestCase
+{
+
+    /* The two variables below are not defined as ""readonly"", but are never
+     * assigned any other value, so a tool should be able to identify that
+     * reads of these will always return their initialized values.
+     */
+    private bool privateTrue = true;
+    private bool privateFalse = false;
+#if (!OMITBAD)
+    /* uses badsource and badsink */
+    public override void Bad()
+    {
+        string data;
+        if (privateTrue)
+        {
+            /* get environment variable ADD */
+            /* POTENTIAL FLAW: Read data from an environment variable */
+            data = Environment.GetEnvironmentVariable(""ADD"");
+        }
+        else
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    /* goodG2B1() - use goodsource and badsink by changing privateTrue to privateFalse */
+    private void GoodG2B1()
+    {
+        string data;
+        if (privateFalse)
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        else
+        {
+            /* FIX: Use a hardcoded string */
+            data = ""foo"";
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+
+    /* GoodG2B2() - use goodsource and badsink by reversing statements in if */
+    private void GoodG2B2()
+    {
+        string data;
+        if (privateTrue)
+        {
+            /* FIX: Use a hardcoded string */
+            data = ""foo"";
+        }
+        else
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+
+    public override void Good()
+    {
+        GoodG2B1();
+        GoodG2B2();
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Environment_68a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-68a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Environment Read data from an environment variable
+ * GoodSource: A hardcoded string
+ * BadSink:  Set the catalog name with the value of data
+ * Flow Variant: 68 Data flow: data passed as a member variable in the ""a"" class, which is used by a method in another class in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__Environment_68a : AbstractTestCase
+{
+
+    public static string data;
+#if (!OMITBAD)
+    public override void Bad()
+    {
+        /* get environment variable ADD */
+        /* POTENTIAL FLAW: Read data from an environment variable */
+        data = Environment.GetEnvironmentVariable(""ADD"");
+        CWE15_External_Control_of_System_or_Configuration_Setting__Environment_68b.BadSink();
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good()
+    {
+        GoodG2B();
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private static void GoodG2B()
+    {
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        CWE15_External_Control_of_System_or_Configuration_Setting__Environment_68b.GoodG2BSink();
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_67a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-67a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: NetClient Read data from a web server with WebClient
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 67 Data flow: data passed in a class from one method to another in different source files in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+using System.IO;
+using System.Net;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_67a : AbstractTestCase
+{
+
+    public class Container
+    {
+        public string containerOne;
+    }
+#if (!OMITBAD)
+    public override void Bad()
+    {
+        string data;
+        data = """"; /* Initialize data */
+        /* read input from WebClient */
+        {
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    using (StreamReader sr = new StreamReader(client.OpenRead(""http://www.example.org/"")))
+                    {
+                        /* POTENTIAL FLAW: Read data from a web server with WebClient */
+                        /* This will be reading the first ""line"" of the response body,
+                        * which could be very long if there are no newlines in the HTML */
+                        data = sr.ReadLine();
+                    }
+                }
+            }
+            catch (IOException exceptIO)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptIO, ""Error with stream reading"");
+            }
+        }
+        Container dataContainer = new Container();
+        dataContainer.containerOne = data;
+        CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_67b.BadSink(dataContainer  );
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good()
+    {
+        GoodG2B();
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private static void GoodG2B()
+    {
+        string data;
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        Container dataContainer = new Container();
+        dataContainer.containerOne = data;
+        CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_67b.GoodG2BSink(dataContainer  );
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_53a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-53a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: ReadLine Read data from the console using ReadLine()
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 53 Data flow: data passed as an argument from one method through two others to a fourth; all four functions are in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+using System.IO;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_53a : AbstractTestCase
+{
+#if (!OMITBAD)
+    public override void Bad()
+    {
+        string data;
+        data = """"; /* Initialize data */
+        {
+            /* read user input from console with ReadLine */
+            try
+            {
+                /* POTENTIAL FLAW: Read data from the console using ReadLine */
+                data = Console.ReadLine();
+            }
+            catch (IOException exceptIO)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptIO, ""Error with stream reading"");
+            }
+        }
+        CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_53b.BadSink(data );
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good()
+    {
+        GoodG2B();
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private void GoodG2B()
+    {
+        string data;
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_53b.GoodG2BSink(data );
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__QueryString_Web_22a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-22a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: QueryString_Web Parse id param out of the URL query string (without using getParameter())
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 22 Control flow: Flow controlled by value of a public static variable. Sink functions are in a separate file from sources.
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__QueryString_Web_22a : AbstractTestCaseWeb
+{
+
+    /* The public static variable below is used to drive control flow in the source function.
+     * The public static variable mimics a global variable in the C/C++ language family. */
+    public static bool badPublicStatic = false;
+#if (!OMITBAD)
+    public override void Bad(HttpRequest req, HttpResponse resp)
+    {
+        string data;
+        badPublicStatic = true;
+        data = CWE15_External_Control_of_System_or_Configuration_Setting__QueryString_Web_22b.BadSource(req, resp);
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif //omitbad
+    /* The public static variables below are used to drive control flow in the source functions.
+     * The public static variable mimics a global variable in the C/C++ language family. */
+    public static bool goodG2B1PublicStatic = false;
+    public static bool GoodG2B2PublicStatic = false;
+#if (!OMITGOOD)
+    public override void Good(HttpRequest req, HttpResponse resp)
+    {
+        GoodG2B1(req, resp);
+        GoodG2B2(req, resp);
+    }
+
+    /* goodG2B1() - use goodsource and badsink by setting the static variable to false instead of true */
+    private void GoodG2B1(HttpRequest req, HttpResponse resp)
+    {
+        string data;
+        goodG2B1PublicStatic = false;
+        data = CWE15_External_Control_of_System_or_Configuration_Setting__QueryString_Web_22b.GoodG2B1Source(req, resp);
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+
+    /* GoodG2B2() - use goodsource and badsink by reversing the blocks in the if in the sink function */
+    private void GoodG2B2(HttpRequest req, HttpResponse resp)
+    {
+        string data;
+        GoodG2B2PublicStatic = true;
+        data = CWE15_External_Control_of_System_or_Configuration_Setting__QueryString_Web_22b.GoodG2B2Source(req, resp);
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_54b.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-54b.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Params_Get_Web Read data from a querystring using Params.Get()
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 54 Data flow: data passed as an argument from one method through three others to a fifth; all five functions are in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_54b
+{
+#if (!OMITBAD)
+    public static void BadSink(string data , HttpRequest req, HttpResponse resp)
+    {
+        CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_54c.BadSink(data , req, resp);
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(string data , HttpRequest req, HttpResponse resp)
+    {
+        CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_54c.GoodG2BSink(data , req, resp);
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__QueryString_Web_54e.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-54e.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: QueryString_Web Parse id param out of the URL query string (without using getParameter())
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 54 Data flow: data passed as an argument from one method through three others to a fifth; all five functions are in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__QueryString_Web_54e
+{
+#if (!OMITBAD)
+    public static void BadSink(string data , HttpRequest req, HttpResponse resp)
+    {
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(string data , HttpRequest req, HttpResponse resp)
+    {
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_53d.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-53d.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: NetClient Read data from a web server with WebClient
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 53 Data flow: data passed as an argument from one method through two others to a fourth; all four functions are in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_53d
+{
+#if (!OMITBAD)
+    public static void BadSink(string data )
+    {
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(string data )
+    {
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Connect_tcp_51a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-51a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Connect_tcp Read data using an outbound tcp connection
+ * GoodSource: A hardcoded string
+ * BadSink:  Set the catalog name with the value of data
+ * Flow Variant: 51 Data flow: data passed as an argument from one function to another in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+using System.IO;
+using System.Net.Sockets;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__Connect_tcp_51a : AbstractTestCase
+{
+#if (!OMITBAD)
+    public override void Bad()
+    {
+        string data;
+        data = """"; /* Initialize data */
+        /* Read data using an outbound tcp connection */
+        {
+            try
+            {
+                /* Read data using an outbound tcp connection */
+                using (TcpClient tcpConn = new TcpClient(""host.example.org"", 39544))
+                {
+                    /* read input from socket */
+                    using (StreamReader sr = new StreamReader(tcpConn.GetStream()))
+                    {
+                        /* POTENTIAL FLAW: Read data using an outbound tcp connection */
+                        data = sr.ReadLine();
+                    }
+                }
+            }
+            catch (IOException exceptIO)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptIO, ""Error with stream reading"");
+            }
+        }
+        CWE15_External_Control_of_System_or_Configuration_Setting__Connect_tcp_51b.BadSink(data  );
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good()
+    {
+        GoodG2B();
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private void GoodG2B()
+    {
+        string data;
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        CWE15_External_Control_of_System_or_Configuration_Setting__Connect_tcp_51b.GoodG2BSink(data  );
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_81_bad.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-81_bad.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: ReadLine Read data from the console using ReadLine()
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 81 Data flow: data passed in a parameter to an abstract method
+ *
+ * */
+#if (!OMITBAD)
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_81_bad : CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_81_base
+{
+
+    public override void Action(string data )
+    {
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+}
+}
+#endif
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Database_04.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-04.tmpl.cs
+*/
+/*
+* @description
+* CWE: 15 External Control of System or Configuration Setting
+* BadSource: Database Read data from a database
+* GoodSource: A hardcoded string
+* BadSink:  Set the catalog name with the value of data
+* Flow Variant: 04 Control flow: if(PRIVATE_CONST_TRUE) and if(PRIVATE_CONST_FALSE)
+*
+* */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__Database_04 : AbstractTestCase
+{
+
+    /* The two variables below are declared ""const"", so a tool should
+     * be able to identify that reads of these will always return their
+     * initialized values.
+     */
+    private const bool PRIVATE_CONST_TRUE = true;
+    private const bool PRIVATE_CONST_FALSE = false;
+#if (!OMITBAD)
+    /* uses badsource and badsink */
+    public override void Bad()
+    {
+        string data;
+        if (PRIVATE_CONST_TRUE)
+        {
+            data = """"; /* Initialize data */
+            /* Read data from a database */
+            {
+                try
+                {
+                    /* setup the connection */
+                    using (SqlConnection connection = IO.GetDBConnection())
+                    {
+                        connection.Open();
+                        /* prepare and execute a (hardcoded) query */
+                        using (SqlCommand command = new SqlCommand(null, connection))
+                        {
+                            command.CommandText = ""select name from users where id=0"";
+                            command.Prepare();
+                            using (SqlDataReader dr = command.ExecuteReader())
+                            {
+                                /* POTENTIAL FLAW: Read data from a database query SqlDataReader */
+                                data = dr.GetString(1);
+                            }
+                        }
+                    }
+                }
+                catch (SqlException exceptSql)
+                {
+                    IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error with SQL statement"");
+                }
+            }
+        }
+        else
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    /* goodG2B1() - use goodsource and badsink by changing PRIVATE_CONST_TRUE to PRIVATE_CONST_FALSE */
+    private void GoodG2B1()
+    {
+        string data;
+        if (PRIVATE_CONST_FALSE)
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        else
+        {
+            /* FIX: Use a hardcoded string */
+            data = ""foo"";
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+
+    /* GoodG2B2() - use goodsource and badsink by reversing statements in if */
+    private void GoodG2B2()
+    {
+        string data;
+        if (PRIVATE_CONST_TRUE)
+        {
+            /* FIX: Use a hardcoded string */
+            data = ""foo"";
+        }
+        else
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+
+    public override void Good()
+    {
+        GoodG2B1();
+        GoodG2B2();
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_61a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-61a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Params_Get_Web Read data from a querystring using Params.Get()
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 61 Data flow: data returned from one method to another in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_61a : AbstractTestCaseWeb
+{
+#if (!OMITBAD)
+    public override void Bad(HttpRequest req, HttpResponse resp)
+    {
+        string data = CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_61b.BadSource(req, resp);
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good(HttpRequest req, HttpResponse resp)
+    {
+        GoodG2B(req, resp);
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private static void GoodG2B(HttpRequest req, HttpResponse resp)
+    {
+        string data = CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_61b.GoodG2BSource(req, resp);
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_61a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-61a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Get_Cookies_Web Read data from the first cookie using Cookies
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 61 Data flow: data returned from one method to another in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_61a : AbstractTestCaseWeb
+{
+#if (!OMITBAD)
+    public override void Bad(HttpRequest req, HttpResponse resp)
+    {
+        string data = CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_61b.BadSource(req, resp);
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good(HttpRequest req, HttpResponse resp)
+    {
+        GoodG2B(req, resp);
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private static void GoodG2B(HttpRequest req, HttpResponse resp)
+    {
+        string data = CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_61b.GoodG2BSource(req, resp);
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Connect_tcp_07.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-07.tmpl.cs
+*/
+/*
+* @description
+* CWE: 15 External Control of System or Configuration Setting
+* BadSource: Connect_tcp Read data using an outbound tcp connection
+* GoodSource: A hardcoded string
+* BadSink:  Set the catalog name with the value of data
+* Flow Variant: 07 Control flow: if(privateFive==5) and if(privateFive!=5)
+*
+* */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+using System.IO;
+using System.Net.Sockets;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__Connect_tcp_07 : AbstractTestCase
+{
+
+    /* The variable below is not declared ""readonly"", but is never assigned
+     * any other value so a tool should be able to identify that reads of
+     * this will always give its initialized value.
+     */
+    private int privateFive = 5;
+#if (!OMITBAD)
+    /* uses badsource and badsink */
+    public override void Bad()
+    {
+        string data;
+        if (privateFive == 5)
+        {
+            data = """"; /* Initialize data */
+            /* Read data using an outbound tcp connection */
+            {
+                try
+                {
+                    /* Read data using an outbound tcp connection */
+                    using (TcpClient tcpConn = new TcpClient(""host.example.org"", 39544))
+                    {
+                        /* read input from socket */
+                        using (StreamReader sr = new StreamReader(tcpConn.GetStream()))
+                        {
+                            /* POTENTIAL FLAW: Read data using an outbound tcp connection */
+                            data = sr.ReadLine();
+                        }
+                    }
+                }
+                catch (IOException exceptIO)
+                {
+                    IO.Logger.Log(NLog.LogLevel.Warn, exceptIO, ""Error with stream reading"");
+                }
+            }
+        }
+        else
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    /* goodG2B1() - use goodsource and badsink by changing privateFive==5 to privateFive!=5 */
+    private void GoodG2B1()
+    {
+        string data;
+        if (privateFive != 5)
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        else
+        {
+            /* FIX: Use a hardcoded string */
+            data = ""foo"";
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+
+    /* GoodG2B2() - use goodsource and badsink by reversing statements in if */
+    private void GoodG2B2()
+    {
+        string data;
+        if (privateFive == 5)
+        {
+            /* FIX: Use a hardcoded string */
+            data = ""foo"";
+        }
+        else
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+
+    public override void Good()
+    {
+        GoodG2B1();
+        GoodG2B2();
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Database_52b.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-52b.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Database Read data from a database
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 52 Data flow: data passed as an argument from one method to another to another in three different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Database_52b
+{
+#if (!OMITBAD)
+    public static void BadSink(string data )
+    {
+        CWE15_External_Control_of_System_or_Configuration_Setting__Database_52c.BadSink(data );
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(string data )
+    {
+        CWE15_External_Control_of_System_or_Configuration_Setting__Database_52c.GoodG2BSink(data );
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_52b.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-52b.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: NetClient Read data from a web server with WebClient
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 52 Data flow: data passed as an argument from one method to another to another in three different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_52b
+{
+#if (!OMITBAD)
+    public static void BadSink(string data )
+    {
+        CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_52c.BadSink(data );
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(string data )
+    {
+        CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_52c.GoodG2BSink(data );
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_71b.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-71b.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: ReadLine Read data from the console using ReadLine()
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 71 Data flow: data passed as an Object reference argument from one method to another in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_71b
+{
+#if (!OMITBAD)
+    public static void BadSink(Object dataObject )
+    {
+        string data = (string)dataObject;
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(Object dataObject )
+    {
+        string data = (string)dataObject;
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__File_31.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-31.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: File Read data from file (named data.txt)
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 31 Data flow: make a copy of data within the same method
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+using System.IO;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__File_31 : AbstractTestCase
+{
+#if (!OMITBAD)
+    /* uses badsource and badsink */
+    public override void Bad()
+    {
+        string dataCopy;
+        {
+            string data;
+            data = """"; /* Initialize data */
+            {
+                try
+                {
+                    /* read string from file into data */
+                    using (StreamReader sr = new StreamReader(""data.txt""))
+                    {
+                        /* POTENTIAL FLAW: Read data from a file */
+                        /* This will be reading the first ""line"" of the file, which
+                         * could be very long if there are little or no newlines in the file */
+                        data = sr.ReadLine();
+                    }
+                }
+                catch (IOException exceptIO)
+                {
+                    IO.Logger.Log(NLog.LogLevel.Warn, exceptIO, ""Error with stream reading"");
+                }
+            }
+            dataCopy = data;
+        }
+        {
+            string data = dataCopy;
+            SqlConnection dbConnection = null;
+            try
+            {
+                dbConnection = IO.GetDBConnection();
+                /* POTENTIAL FLAW: Set the database user name with the value of data
+                 * allowing unauthorized access to a portion of the DB */
+                dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+                dbConnection.Open();
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+            }
+            finally
+            {
+                try
+                {
+                    if (dbConnection != null)
+                    {
+                        dbConnection.Close();
+                    }
+                }
+                catch (SqlException exceptSql)
+                {
+                    IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+                }
+            }
+        }
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good()
+    {
+        GoodG2B();
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private void GoodG2B()
+    {
+        string dataCopy;
+        {
+            string data;
+            /* FIX: Use a hardcoded string */
+            data = ""foo"";
+            dataCopy = data;
+        }
+        {
+            string data = dataCopy;
+            SqlConnection dbConnection = null;
+            try
+            {
+                dbConnection = IO.GetDBConnection();
+                /* POTENTIAL FLAW: Set the database user name with the value of data
+                 * allowing unauthorized access to a portion of the DB */
+                dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+                dbConnection.Open();
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+            }
+            finally
+            {
+                try
+                {
+                    if (dbConnection != null)
+                    {
+                        dbConnection.Close();
+                    }
+                }
+                catch (SqlException exceptSql)
+                {
+                    IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+                }
+            }
+        }
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Database_74b.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-74b.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Database Read data from a database
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 74 Data flow: data passed in a Dictionary from one method to another in different source files in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System.Collections.Generic;
+using System;
+
+using System.Web;
+
+using System.Data.SqlClient;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Database_74b
+{
+#if (!OMITBAD)
+    public static void BadSink(Dictionary<int,string> dataDictionary )
+    {
+        string data = dataDictionary[2];
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(Dictionary<int,string> dataDictionary )
+    {
+        string data = dataDictionary[2];
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_73a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-73a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Params_Get_Web Read data from a querystring using Params.Get()
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 73 Data flow: data passed in a LinkedList from one method to another in different source files in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System.Collections.Generic;
+using System;
+
+using System.Web;
+
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_73a : AbstractTestCaseWeb
+{
+#if (!OMITBAD)
+    public override void Bad(HttpRequest req, HttpResponse resp)
+    {
+        string data;
+        /* POTENTIAL FLAW: Read data from a querystring using Params.Get */
+        data = req.Params.Get(""name"");
+        LinkedList<string> dataLinkedList = new LinkedList<string>();
+        dataLinkedList.AddLast(data);
+        dataLinkedList.AddLast(data);
+        dataLinkedList.AddLast(data);
+        CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_73b.BadSink(dataLinkedList , req, resp );
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good(HttpRequest req, HttpResponse resp)
+    {
+        GoodG2B(req, resp);
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private static void GoodG2B(HttpRequest req, HttpResponse resp)
+    {
+        string data;
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        LinkedList<string> dataLinkedList = new LinkedList<string>();
+        dataLinkedList.AddLast(data);
+        dataLinkedList.AddLast(data);
+        dataLinkedList.AddLast(data);
+        CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_73b.GoodG2BSink(dataLinkedList , req, resp );
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Database_75b.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-75b.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Database Read data from a database
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 75 Data flow: data passed in a serialized object from one method to another in different source files in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+
+using System.Web;
+
+using System.Data.SqlClient;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Database_75b
+{
+#if (!OMITBAD)
+    public static void BadSink(byte[] dataSerialized )
+    {
+        try
+        {
+            string data;
+            var binForm = new BinaryFormatter();
+            using (var memStream = new MemoryStream())
+            {
+                memStream.Write(dataSerialized, 0, dataSerialized.Length);
+                memStream.Seek(0, SeekOrigin.Begin);
+                data = (string)binForm.Deserialize(memStream);
+            }
+            SqlConnection dbConnection = null;
+            try
+            {
+                dbConnection = IO.GetDBConnection();
+                /* POTENTIAL FLAW: Set the database user name with the value of data
+                 * allowing unauthorized access to a portion of the DB */
+                dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+                dbConnection.Open();
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+            }
+            finally
+            {
+                try
+                {
+                    if (dbConnection != null)
+                    {
+                        dbConnection.Close();
+                    }
+                }
+                catch (SqlException exceptSql)
+                {
+                    IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+                }
+            }
+        }
+        catch (SerializationException exceptSerialize)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, ""SerializationException in deserialization"", exceptSerialize);
+        }
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(byte[] dataSerialized )
+    {
+        try
+        {
+            string data;
+            var binForm = new BinaryFormatter();
+            using (var memStream = new MemoryStream())
+            {
+                memStream.Write(dataSerialized, 0, dataSerialized.Length);
+                memStream.Seek(0, SeekOrigin.Begin);
+                data = (string)binForm.Deserialize(memStream);
+            }
+            SqlConnection dbConnection = null;
+            try
+            {
+                dbConnection = IO.GetDBConnection();
+                /* POTENTIAL FLAW: Set the database user name with the value of data
+                 * allowing unauthorized access to a portion of the DB */
+                dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+                dbConnection.Open();
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+            }
+            finally
+            {
+                try
+                {
+                    if (dbConnection != null)
+                    {
+                        dbConnection.Close();
+                    }
+                }
+                catch (SqlException exceptSql)
+                {
+                    IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+                }
+            }
+        }
+        catch (SerializationException exceptSerialize)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, ""SerializationException in deserialization"", exceptSerialize);
+        }
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_71a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-71a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Get_Cookies_Web Read data from the first cookie using Cookies
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 71 Data flow: data passed as an Object reference argument from one method to another in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_71a : AbstractTestCaseWeb
+{
+#if (!OMITBAD)
+    public override void Bad(HttpRequest req, HttpResponse resp)
+    {
+        string data;
+        data = """"; /* initialize data in case there are no cookies */
+        /* Read data from cookies */
+        {
+            HttpCookieCollection cookieSources = req.Cookies;
+            if (cookieSources != null)
+            {
+                /* POTENTIAL FLAW: Read data from the first cookie value */
+                data = cookieSources[0].Value;
+            }
+        }
+        CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_71b.BadSink((Object)data , req, resp );
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good(HttpRequest req, HttpResponse resp)
+    {
+        GoodG2B(req, resp);
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private static void GoodG2B(HttpRequest req, HttpResponse resp)
+    {
+        string data;
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_71b.GoodG2BSink((Object)data , req, resp );
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_22b.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-22b.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: NetClient Read data from a web server with WebClient
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 22 Control flow: Flow controlled by value of a public static variable. Sink functions are in a separate file from sources.
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+using System.IO;
+using System.Net;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_22b
+{
+#if (!OMITBAD)
+    public static string BadSource()
+    {
+        string data;
+        if (CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_22a.badPublicStatic)
+        {
+            data = """"; /* Initialize data */
+            /* read input from WebClient */
+            {
+                try
+                {
+                    using (WebClient client = new WebClient())
+                    {
+                        using (StreamReader sr = new StreamReader(client.OpenRead(""http://www.example.org/"")))
+                        {
+                            /* POTENTIAL FLAW: Read data from a web server with WebClient */
+                            /* This will be reading the first ""line"" of the response body,
+                            * which could be very long if there are no newlines in the HTML */
+                            data = sr.ReadLine();
+                        }
+                    }
+                }
+                catch (IOException exceptIO)
+                {
+                    IO.Logger.Log(NLog.LogLevel.Warn, exceptIO, ""Error with stream reading"");
+                }
+            }
+        }
+        else
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        return data;
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B1() - use goodsource and badsink by setting the static variable to false instead of true */
+    public static string GoodG2B1Source()
+    {
+        string data;
+        if (CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_22a.goodG2B1PublicStatic)
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        else
+        {
+            /* FIX: Use a hardcoded string */
+            data = ""foo"";
+        }
+        return data;
+    }
+
+    /* GoodG2B2() - use goodsource and badsink by reversing the blocks in the if in the sink function */
+    public static string GoodG2B2Source()
+    {
+        string data;
+        if (CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_22a.GoodG2B2PublicStatic)
+        {
+            /* FIX: Use a hardcoded string */
+            data = ""foo"";
+        }
+        else
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        return data;
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_54a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-54a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Params_Get_Web Read data from a querystring using Params.Get()
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 54 Data flow: data passed as an argument from one method through three others to a fifth; all five functions are in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_54a : AbstractTestCaseWeb
+{
+#if (!OMITBAD)
+    public override void Bad(HttpRequest req, HttpResponse resp)
+    {
+        string data;
+        /* POTENTIAL FLAW: Read data from a querystring using Params.Get */
+        data = req.Params.Get(""name"");
+        CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_54b.BadSink(data , req, resp);
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good(HttpRequest req, HttpResponse resp)
+    {
+        GoodG2B(req, resp);
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private void GoodG2B(HttpRequest req, HttpResponse resp)
+    {
+        string data;
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_54b.GoodG2BSink(data , req, resp);
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__File_72a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-72a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: File Read data from file (named data.txt)
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 72 Data flow: data passed in a Hashtable from one method to another in different source files in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System.Collections;
+using System;
+
+using System.Web;
+
+using System.IO;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__File_72a : AbstractTestCase
+{
+#if (!OMITBAD)
+    public override void Bad()
+    {
+        string data;
+        data = """"; /* Initialize data */
+        {
+            try
+            {
+                /* read string from file into data */
+                using (StreamReader sr = new StreamReader(""data.txt""))
+                {
+                    /* POTENTIAL FLAW: Read data from a file */
+                    /* This will be reading the first ""line"" of the file, which
+                     * could be very long if there are little or no newlines in the file */
+                    data = sr.ReadLine();
+                }
+            }
+            catch (IOException exceptIO)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptIO, ""Error with stream reading"");
+            }
+        }
+        Hashtable dataHashtable = new Hashtable(5);
+        dataHashtable.Add(0, data);
+        dataHashtable.Add(1, data);
+        dataHashtable.Add(2, data);
+        CWE15_External_Control_of_System_or_Configuration_Setting__File_72b.BadSink(dataHashtable  );
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good()
+    {
+        GoodG2B();
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private static void GoodG2B()
+    {
+        string data;
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        Hashtable dataHashtable = new Hashtable(5);
+        dataHashtable.Add(0, data);
+        dataHashtable.Add(1, data);
+        dataHashtable.Add(2, data);
+        CWE15_External_Control_of_System_or_Configuration_Setting__File_72b.GoodG2BSink(dataHashtable  );
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__File_42.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-42.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: File Read data from file (named data.txt)
+ * GoodSource: A hardcoded string
+ * BadSink:  Set the catalog name with the value of data
+ * Flow Variant: 42 Data flow: data returned from one method to another in the same class
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+using System.IO;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__File_42 : AbstractTestCase
+{
+#if (!OMITBAD)
+    private static string BadSource()
+    {
+        string data;
+        data = """"; /* Initialize data */
+        {
+            try
+            {
+                /* read string from file into data */
+                using (StreamReader sr = new StreamReader(""data.txt""))
+                {
+                    /* POTENTIAL FLAW: Read data from a file */
+                    /* This will be reading the first ""line"" of the file, which
+                     * could be very long if there are little or no newlines in the file */
+                    data = sr.ReadLine();
+                }
+            }
+            catch (IOException exceptIO)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptIO, ""Error with stream reading"");
+            }
+        }
+        return data;
+    }
+
+    /* use badsource and badsink */
+    public override void Bad()
+    {
+        string data = BadSource();
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    private static string GoodG2BSource()
+    {
+        string data;
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        return data;
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private static void GoodG2B()
+    {
+        string data = GoodG2BSource();
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+
+    public override void Good()
+    {
+        GoodG2B();
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_71a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-71a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: ReadLine Read data from the console using ReadLine()
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 71 Data flow: data passed as an Object reference argument from one method to another in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+using System.IO;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_71a : AbstractTestCase
+{
+#if (!OMITBAD)
+    public override void Bad()
+    {
+        string data;
+        data = """"; /* Initialize data */
+        {
+            /* read user input from console with ReadLine */
+            try
+            {
+                /* POTENTIAL FLAW: Read data from the console using ReadLine */
+                data = Console.ReadLine();
+            }
+            catch (IOException exceptIO)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptIO, ""Error with stream reading"");
+            }
+        }
+        CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_71b.BadSink((Object)data  );
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good()
+    {
+        GoodG2B();
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private static void GoodG2B()
+    {
+        string data;
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        CWE15_External_Control_of_System_or_Configuration_Setting__ReadLine_71b.GoodG2BSink((Object)data  );
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_53d.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-53d.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Params_Get_Web Read data from a querystring using Params.Get()
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 53 Data flow: data passed as an argument from one method through two others to a fourth; all four functions are in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_53d
+{
+#if (!OMITBAD)
+    public static void BadSink(string data , HttpRequest req, HttpResponse resp)
+    {
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(string data , HttpRequest req, HttpResponse resp)
+    {
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_52b.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-52b.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Get_Cookies_Web Read data from the first cookie using Cookies
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 52 Data flow: data passed as an argument from one method to another to another in three different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_52b
+{
+#if (!OMITBAD)
+    public static void BadSink(string data , HttpRequest req, HttpResponse resp)
+    {
+        CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_52c.BadSink(data , req, resp);
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(string data , HttpRequest req, HttpResponse resp)
+    {
+        CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_52c.GoodG2BSink(data , req, resp);
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Listen_tcp_72a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-72a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Listen_tcp Read data using a listening tcp connection
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 72 Data flow: data passed in a Hashtable from one method to another in different source files in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System.Collections;
+using System;
+
+using System.Web;
+
+using System.IO;
+using System.Net.Sockets;
+using System.Net;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Listen_tcp_72a : AbstractTestCase
+{
+#if (!OMITBAD)
+    public override void Bad()
+    {
+        string data;
+        data = """"; /* Initialize data */
+        /* Read data using a listening tcp connection */
+        {
+            TcpListener listener = null;
+            try
+            {
+                listener = new TcpListener(IPAddress.Parse(""10.10.1.10""), 39543);
+                listener.Start();
+                using (TcpClient tcpConn = listener.AcceptTcpClient())
+                {
+                    /* read input from socket */
+                    using (StreamReader sr = new StreamReader(tcpConn.GetStream()))
+                    {
+                        /* POTENTIAL FLAW: Read data using a listening tcp connection */
+                        data = sr.ReadLine();
+                    }
+                }
+            }
+            catch (IOException exceptIO)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptIO, ""Error with stream reading"");
+            }
+            finally
+            {
+                if (listener != null)
+                {
+                    try
+                    {
+                        listener.Stop();
+                    }
+                    catch(SocketException se)
+                    {
+                        IO.Logger.Log(NLog.LogLevel.Warn, se, ""Error closing TcpListener"");
+                    }
+                }
+            }
+        }
+        Hashtable dataHashtable = new Hashtable(5);
+        dataHashtable.Add(0, data);
+        dataHashtable.Add(1, data);
+        dataHashtable.Add(2, data);
+        CWE15_External_Control_of_System_or_Configuration_Setting__Listen_tcp_72b.BadSink(dataHashtable  );
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good()
+    {
+        GoodG2B();
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private static void GoodG2B()
+    {
+        string data;
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        Hashtable dataHashtable = new Hashtable(5);
+        dataHashtable.Add(0, data);
+        dataHashtable.Add(1, data);
+        dataHashtable.Add(2, data);
+        CWE15_External_Control_of_System_or_Configuration_Setting__Listen_tcp_72b.GoodG2BSink(dataHashtable  );
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_54d.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-54d.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Get_Cookies_Web Read data from the first cookie using Cookies
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 54 Data flow: data passed as an argument from one method through three others to a fifth; all five functions are in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_54d
+{
+#if (!OMITBAD)
+    public static void BadSink(string data , HttpRequest req, HttpResponse resp)
+    {
+        CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_54e.BadSink(data , req, resp);
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(string data , HttpRequest req, HttpResponse resp)
+    {
+        CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_54e.GoodG2BSink(data , req, resp);
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Environment_72a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-72a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Environment Read data from an environment variable
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 72 Data flow: data passed in a Hashtable from one method to another in different source files in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System.Collections;
+using System;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Environment_72a : AbstractTestCase
+{
+#if (!OMITBAD)
+    public override void Bad()
+    {
+        string data;
+        /* get environment variable ADD */
+        /* POTENTIAL FLAW: Read data from an environment variable */
+        data = Environment.GetEnvironmentVariable(""ADD"");
+        Hashtable dataHashtable = new Hashtable(5);
+        dataHashtable.Add(0, data);
+        dataHashtable.Add(1, data);
+        dataHashtable.Add(2, data);
+        CWE15_External_Control_of_System_or_Configuration_Setting__Environment_72b.BadSink(dataHashtable  );
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good()
+    {
+        GoodG2B();
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private static void GoodG2B()
+    {
+        string data;
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        Hashtable dataHashtable = new Hashtable(5);
+        dataHashtable.Add(0, data);
+        dataHashtable.Add(1, data);
+        dataHashtable.Add(2, data);
+        CWE15_External_Control_of_System_or_Configuration_Setting__Environment_72b.GoodG2BSink(dataHashtable  );
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Listen_tcp_13.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-13.tmpl.cs
+*/
+/*
+* @description
+* CWE: 15 External Control of System or Configuration Setting
+* BadSource: Listen_tcp Read data using a listening tcp connection
+* GoodSource: A hardcoded string
+* BadSink:  Set the catalog name with the value of data
+* Flow Variant: 13 Control flow: if(IO.STATIC_READONLY_FIVE==5) and if(IO.STATIC_READONLY_FIVE!=5)
+*
+* */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+using System.IO;
+using System.Net.Sockets;
+using System.Net;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__Listen_tcp_13 : AbstractTestCase
+{
+#if (!OMITBAD)
+    /* uses badsource and badsink */
+    public override void Bad()
+    {
+        string data;
+        if (IO.STATIC_READONLY_FIVE == 5)
+        {
+            data = """"; /* Initialize data */
+            /* Read data using a listening tcp connection */
+            {
+                TcpListener listener = null;
+                try
+                {
+                    listener = new TcpListener(IPAddress.Parse(""10.10.1.10""), 39543);
+                    listener.Start();
+                    using (TcpClient tcpConn = listener.AcceptTcpClient())
+                    {
+                        /* read input from socket */
+                        using (StreamReader sr = new StreamReader(tcpConn.GetStream()))
+                        {
+                            /* POTENTIAL FLAW: Read data using a listening tcp connection */
+                            data = sr.ReadLine();
+                        }
+                    }
+                }
+                catch (IOException exceptIO)
+                {
+                    IO.Logger.Log(NLog.LogLevel.Warn, exceptIO, ""Error with stream reading"");
+                }
+                finally
+                {
+                    if (listener != null)
+                    {
+                        try
+                        {
+                            listener.Stop();
+                        }
+                        catch(SocketException se)
+                        {
+                            IO.Logger.Log(NLog.LogLevel.Warn, se, ""Error closing TcpListener"");
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    /* goodG2B1() - use goodsource and badsink by changing IO.STATIC_READONLY_FIVE==5 to IO.STATIC_READONLY_FIVE!=5 */
+    private void GoodG2B1()
+    {
+        string data;
+        if (IO.STATIC_READONLY_FIVE != 5)
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        else
+        {
+            /* FIX: Use a hardcoded string */
+            data = ""foo"";
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+
+    /* GoodG2B2() - use goodsource and badsink by reversing statements in if */
+    private void GoodG2B2()
+    {
+        string data;
+        if (IO.STATIC_READONLY_FIVE == 5)
+        {
+            /* FIX: Use a hardcoded string */
+            data = ""foo"";
+        }
+        else
+        {
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+
+    public override void Good()
+    {
+        GoodG2B1();
+        GoodG2B2();
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Listen_tcp_75b.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-75b.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Listen_tcp Read data using a listening tcp connection
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 75 Data flow: data passed in a serialized object from one method to another in different source files in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+
+using System.Web;
+
+using System.Data.SqlClient;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Listen_tcp_75b
+{
+#if (!OMITBAD)
+    public static void BadSink(byte[] dataSerialized )
+    {
+        try
+        {
+            string data;
+            var binForm = new BinaryFormatter();
+            using (var memStream = new MemoryStream())
+            {
+                memStream.Write(dataSerialized, 0, dataSerialized.Length);
+                memStream.Seek(0, SeekOrigin.Begin);
+                data = (string)binForm.Deserialize(memStream);
+            }
+            SqlConnection dbConnection = null;
+            try
+            {
+                dbConnection = IO.GetDBConnection();
+                /* POTENTIAL FLAW: Set the database user name with the value of data
+                 * allowing unauthorized access to a portion of the DB */
+                dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+                dbConnection.Open();
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+            }
+            finally
+            {
+                try
+                {
+                    if (dbConnection != null)
+                    {
+                        dbConnection.Close();
+                    }
+                }
+                catch (SqlException exceptSql)
+                {
+                    IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+                }
+            }
+        }
+        catch (SerializationException exceptSerialize)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, ""SerializationException in deserialization"", exceptSerialize);
+        }
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(byte[] dataSerialized )
+    {
+        try
+        {
+            string data;
+            var binForm = new BinaryFormatter();
+            using (var memStream = new MemoryStream())
+            {
+                memStream.Write(dataSerialized, 0, dataSerialized.Length);
+                memStream.Seek(0, SeekOrigin.Begin);
+                data = (string)binForm.Deserialize(memStream);
+            }
+            SqlConnection dbConnection = null;
+            try
+            {
+                dbConnection = IO.GetDBConnection();
+                /* POTENTIAL FLAW: Set the database user name with the value of data
+                 * allowing unauthorized access to a portion of the DB */
+                dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+                dbConnection.Open();
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+            }
+            finally
+            {
+                try
+                {
+                    if (dbConnection != null)
+                    {
+                        dbConnection.Close();
+                    }
+                }
+                catch (SqlException exceptSql)
+                {
+                    IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+                }
+            }
+        }
+        catch (SerializationException exceptSerialize)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, ""SerializationException in deserialization"", exceptSerialize);
+        }
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__File_53d.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-53d.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: File Read data from file (named data.txt)
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 53 Data flow: data passed as an argument from one method through two others to a fourth; all four functions are in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__File_53d
+{
+#if (!OMITBAD)
+    public static void BadSink(string data )
+    {
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(string data )
+    {
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_74a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-74a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: NetClient Read data from a web server with WebClient
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 74 Data flow: data passed in a Dictionary from one method to another in different source files in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System.Collections.Generic;
+using System;
+
+using System.Web;
+
+using System.IO;
+using System.Net;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_74a : AbstractTestCase
+{
+#if (!OMITBAD)
+    public override void Bad()
+    {
+        string data;
+        data = """"; /* Initialize data */
+        /* read input from WebClient */
+        {
+            try
+            {
+                using (WebClient client = new WebClient())
+                {
+                    using (StreamReader sr = new StreamReader(client.OpenRead(""http://www.example.org/"")))
+                    {
+                        /* POTENTIAL FLAW: Read data from a web server with WebClient */
+                        /* This will be reading the first ""line"" of the response body,
+                        * which could be very long if there are no newlines in the HTML */
+                        data = sr.ReadLine();
+                    }
+                }
+            }
+            catch (IOException exceptIO)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptIO, ""Error with stream reading"");
+            }
+        }
+        Dictionary<int,string> dataDictionary = new Dictionary<int,string>();
+        dataDictionary.Add(0, data);
+        dataDictionary.Add(1, data);
+        dataDictionary.Add(2, data);
+        CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_74b.BadSink(dataDictionary  );
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good()
+    {
+        GoodG2B();
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private static void GoodG2B()
+    {
+        string data;
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        Dictionary<int,string> dataDictionary = new Dictionary<int,string>();
+        dataDictionary.Add(0, data);
+        dataDictionary.Add(1, data);
+        dataDictionary.Add(2, data);
+        CWE15_External_Control_of_System_or_Configuration_Setting__NetClient_74b.GoodG2BSink(dataDictionary  );
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_71b.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-71b.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Params_Get_Web Read data from a querystring using Params.Get()
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 71 Data flow: data passed as an Object reference argument from one method to another in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_71b
+{
+#if (!OMITBAD)
+    public static void BadSink(Object dataObject , HttpRequest req, HttpResponse resp)
+    {
+        string data = (string)dataObject;
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(Object dataObject , HttpRequest req, HttpResponse resp)
+    {
+        string data = (string)dataObject;
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Connect_tcp_81_bad.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-81_bad.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Connect_tcp Read data using an outbound tcp connection
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 81 Data flow: data passed in a parameter to an abstract method
+ *
+ * */
+#if (!OMITBAD)
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Connect_tcp_81_bad : CWE15_External_Control_of_System_or_Configuration_Setting__Connect_tcp_81_base
+{
+
+    public override void Action(string data )
+    {
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+}
+}
+#endif
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Environment_81_base.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-81_base.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Environment Read data from an environment variable
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 81 Data flow: data passed in a parameter to an abstract method
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+abstract class CWE15_External_Control_of_System_or_Configuration_Setting__Environment_81_base
+{
+    public abstract void Action(string data );
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Database_15.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-15.tmpl.cs
+*/
+/*
+* @description
+* CWE: 15 External Control of System or Configuration Setting
+* BadSource: Database Read data from a database
+* GoodSource: A hardcoded string
+* BadSink:  Set the catalog name with the value of data
+* Flow Variant: 15 Control flow: switch(6)
+*
+* */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__Database_15 : AbstractTestCase
+{
+#if (!OMITBAD)
+    /* uses badsource and badsink */
+    public override void Bad()
+    {
+        string data = null;
+        switch (6)
+        {
+        case 6:
+            data = """"; /* Initialize data */
+            /* Read data from a database */
+            {
+                try
+                {
+                    /* setup the connection */
+                    using (SqlConnection connection = IO.GetDBConnection())
+                    {
+                        connection.Open();
+                        /* prepare and execute a (hardcoded) query */
+                        using (SqlCommand command = new SqlCommand(null, connection))
+                        {
+                            command.CommandText = ""select name from users where id=0"";
+                            command.Prepare();
+                            using (SqlDataReader dr = command.ExecuteReader())
+                            {
+                                /* POTENTIAL FLAW: Read data from a database query SqlDataReader */
+                                data = dr.GetString(1);
+                            }
+                        }
+                    }
+                }
+                catch (SqlException exceptSql)
+                {
+                    IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error with SQL statement"");
+                }
+            }
+            break;
+        default:
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+            break;
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    /* goodG2B1() - use goodsource and badsink by changing the  switch to switch(5) */
+    private void GoodG2B1()
+    {
+        string data = null;
+        switch (5)
+        {
+        case 6:
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+            break;
+        default:
+            /* FIX: Use a hardcoded string */
+            data = ""foo"";
+            break;
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+
+    /* GoodG2B2() - use goodsource and badsink by reversing the blocks in the switch  */
+    private void GoodG2B2()
+    {
+        string data = null;
+        switch (6)
+        {
+        case 6:
+            /* FIX: Use a hardcoded string */
+            data = ""foo"";
+            break;
+        default:
+            /* INCIDENTAL: CWE 561 Dead Code, the code below will never run
+             * but ensure data is inititialized before the Sink to avoid compiler errors */
+            data = null;
+            break;
+        }
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+
+    public override void Good()
+    {
+        GoodG2B1();
+        GoodG2B2();
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_66b.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-66b.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Get_Cookies_Web Read data from the first cookie using Cookies
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 66 Data flow: data passed in an array from one method to another in different source files in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Data.SqlClient;
+
+using System.Web;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Get_Cookies_Web_66b
+{
+#if (!OMITBAD)
+    public static void BadSink(string[] dataArray , HttpRequest req, HttpResponse resp)
+    {
+        string data = dataArray[2];
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(string[] dataArray , HttpRequest req, HttpResponse resp)
+    {
+        string data = dataArray[2];
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Database_53a.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-53a.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Database Read data from a database
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 53 Data flow: data passed as an argument from one method through two others to a fourth; all four functions are in different classes in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System;
+
+using System.Web;
+
+using System.Data.SqlClient;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+
+class CWE15_External_Control_of_System_or_Configuration_Setting__Database_53a : AbstractTestCase
+{
+#if (!OMITBAD)
+    public override void Bad()
+    {
+        string data;
+        data = """"; /* Initialize data */
+        /* Read data from a database */
+        {
+            try
+            {
+                /* setup the connection */
+                using (SqlConnection connection = IO.GetDBConnection())
+                {
+                    connection.Open();
+                    /* prepare and execute a (hardcoded) query */
+                    using (SqlCommand command = new SqlCommand(null, connection))
+                    {
+                        command.CommandText = ""select name from users where id=0"";
+                        command.Prepare();
+                        using (SqlDataReader dr = command.ExecuteReader())
+                        {
+                            /* POTENTIAL FLAW: Read data from a database query SqlDataReader */
+                            data = dr.GetString(1);
+                        }
+                    }
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error with SQL statement"");
+            }
+        }
+        CWE15_External_Control_of_System_or_Configuration_Setting__Database_53b.BadSink(data );
+    }
+#endif //omitbad
+#if (!OMITGOOD)
+    public override void Good()
+    {
+        GoodG2B();
+    }
+
+    /* goodG2B() - use goodsource and badsink */
+    private void GoodG2B()
+    {
+        string data;
+        /* FIX: Use a hardcoded string */
+        data = ""foo"";
+        CWE15_External_Control_of_System_or_Configuration_Setting__Database_53b.GoodG2BSink(data );
+    }
+#endif //omitgood
+}
+}
+",1
+"/* TEMPLATE GENERATED TESTCASE FILE
+Filename: CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_72b.cs
+Label Definition File: CWE15_External_Control_of_System_or_Configuration_Setting.label.xml
+Template File: sources-sink-72b.tmpl.cs
+*/
+/*
+ * @description
+ * CWE: 15 External Control of System or Configuration Setting
+ * BadSource: Params_Get_Web Read data from a querystring using Params.Get()
+ * GoodSource: A hardcoded string
+ * Sinks:
+ *    BadSink : Set the catalog name with the value of data
+ * Flow Variant: 72 Data flow: data passed in a Hashtable from one method to another in different source files in the same package
+ *
+ * */
+
+using TestCaseSupport;
+using System.Collections;
+using System;
+
+using System.Web;
+
+using System.Data.SqlClient;
+
+namespace testcases.CWE15_External_Control_of_System_or_Configuration_Setting
+{
+class CWE15_External_Control_of_System_or_Configuration_Setting__Params_Get_Web_72b
+{
+#if (!OMITBAD)
+    public static void BadSink(Hashtable dataHashtable , HttpRequest req, HttpResponse resp)
+    {
+        string data = (string) dataHashtable[2];
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+
+#if (!OMITGOOD)
+    /* goodG2B() - use goodsource and badsink */
+    public static void GoodG2BSink(Hashtable dataHashtable , HttpRequest req, HttpResponse resp)
+    {
+        string data = (string) dataHashtable[2];
+        SqlConnection dbConnection = null;
+        try
+        {
+            dbConnection = IO.GetDBConnection();
+            /* POTENTIAL FLAW: Set the database user name with the value of data
+             * allowing unauthorized access to a portion of the DB */
+            dbConnection.ConnectionString = @""Data Source="" + """" + "";Initial Catalog="" + """" + "";User ID="" + data + "";Password="" + """";
+            dbConnection.Open();
+        }
+        catch (SqlException exceptSql)
+        {
+            IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error getting database connection"");
+        }
+        finally
+        {
+            try
+            {
+                if (dbConnection != null)
+                {
+                    dbConnection.Close();
+                }
+            }
+            catch (SqlException exceptSql)
+            {
+                IO.Logger.Log(NLog.LogLevel.Warn, exceptSql, ""Error closing Connection"");
+            }
+        }
+    }
+#endif
+}
+}
+",1
+"public virtual ListSpeechSynthesisTasksResponse ListSpeechSynthesisTasks(ListSpeechSynthesisTasksRequest request){var options = new InvokeOptions();options.RequestMarshaller = ListSpeechSynthesisTasksRequestMarshaller.Instance;options.ResponseUnmarshaller = ListSpeechSynthesisTasksResponseUnmarshaller.Instance;return Invoke<ListSpeechSynthesisTasksResponse>(request, options);}",0
+"public virtual UpdateJourneyStateResponse UpdateJourneyState(UpdateJourneyStateRequest request){var options = new InvokeOptions();options.RequestMarshaller = UpdateJourneyStateRequestMarshaller.Instance;options.ResponseUnmarshaller = UpdateJourneyStateResponseUnmarshaller.Instance;return Invoke<UpdateJourneyStateResponse>(request, options);}",0
+public void RemovePresentationFormat(){MutableSection s = (MutableSection)FirstSection;s.RemoveProperty(PropertyIDMap.PID_PRESFORMAT);},0
+"public CellRangeAddressList(int firstRow, int lastRow, int firstCol, int lastCol): this(){AddCellRangeAddress(firstRow, firstCol, lastRow, lastCol);}",0
+"public virtual void delete(int key){int i = binarySearch(mKeys, 0, mSize, key);if (i >= 0){if (mValues[i] != DELETED){mValues[i] = DELETED;mGarbage = true;}}}",0
+public virtual NGit.Api.CreateBranchCommand SetStartPoint(RevCommit startPoint){CheckCallable();this.startCommit = startPoint;this.startPoint = null;return this;},0
+public int centerX(){return (left + right) >> 1;},0
+public virtual ListPresetsResponse ListPresets(){return ListPresets(new ListPresetsRequest());},0
+"public virtual DeleteFolderContentsResponse DeleteFolderContents(DeleteFolderContentsRequest request){var options = new InvokeOptions();options.RequestMarshaller = DeleteFolderContentsRequestMarshaller.Instance;options.ResponseUnmarshaller = DeleteFolderContentsResponseUnmarshaller.Instance;return Invoke<DeleteFolderContentsResponse>(request, options);}",0
+"public virtual GetConsoleOutputResponse GetConsoleOutput(GetConsoleOutputRequest request){var options = new InvokeOptions();options.RequestMarshaller = GetConsoleOutputRequestMarshaller.Instance;options.ResponseUnmarshaller = GetConsoleOutputResponseUnmarshaller.Instance;return Invoke<GetConsoleOutputResponse>(request, options);}",0
+"public virtual PutMailboxPermissionsResponse PutMailboxPermissions(PutMailboxPermissionsRequest request){var options = new InvokeOptions();options.RequestMarshaller = PutMailboxPermissionsRequestMarshaller.Instance;options.ResponseUnmarshaller = PutMailboxPermissionsResponseUnmarshaller.Instance;return Invoke<PutMailboxPermissionsResponse>(request, options);}",0
+"public virtual DisableSnapshotCopyResponse DisableSnapshotCopy(DisableSnapshotCopyRequest request){var options = new InvokeOptions();options.RequestMarshaller = DisableSnapshotCopyRequestMarshaller.Instance;options.ResponseUnmarshaller = DisableSnapshotCopyResponseUnmarshaller.Instance;return Invoke<DisableSnapshotCopyResponse>(request, options);}",0
+"public static string StripExtension(string filename){int idx = filename.IndexOf('.');if (idx != -1){filename = filename.Substring(0, idx);}return filename;}",0
+public override java.nio.ByteBuffer putInt(int value){throw new System.NotImplementedException();},0
+public int LastIndexOf(int o){int rval = _limit - 1;for (; rval >= 0; rval--){if (o == _array[rval]){break;}}return rval;},0
+"public virtual void SetCountsByTime(int[] counts, long msecStep){countsByTime = counts;countsByTimeStepMSec = msecStep;}",0
+public FeatHdrRecord(RecordInputStream in1){futureHeader = new FtrHeader(in1);isf_sharedFeatureType = in1.ReadShort();reserved = (byte)in1.ReadByte();cbHdrData = in1.ReadInt();rgbHdrData = in1.ReadRemainder();},0
+public CopyOnWriteArrayList(){elements = libcore.util.EmptyArray.OBJECT;},0
+public WriteRequest(DeleteRequest deleteRequest){_deleteRequest = deleteRequest;},0
+public void ReadFully(byte[] buf){_in.ReadFully(buf);},0
+"public static ICell GetCell(IRow row, int column){ICell cell = row.GetCell(column);if (cell == null){cell = row.CreateCell(column);}return cell;}",0
+public virtual void SetPackConfig(PackConfig pc){this.packConfig = pc;},0
+"public override string GetSignerName(){return ""HMAC-SHA1"";}",0
+public virtual Antlr4.Runtime.Misc.IntervalSet Or(IIntSet a){Antlr4.Runtime.Misc.IntervalSet o = new Antlr4.Runtime.Misc.IntervalSet();o.AddAll(this);o.AddAll(a);return o;},0
+"public override String ToString(){StringBuilder sb = new StringBuilder(64);sb.Append(GetType().Name).Append("" ["");sb.Append(value);sb.Append(""]"");return sb.ToString();}",0
+"public virtual DescribeVpcEndpointServicePermissionsResponse DescribeVpcEndpointServicePermissions(DescribeVpcEndpointServicePermissionsRequest request){var options = new InvokeOptions();options.RequestMarshaller = DescribeVpcEndpointServicePermissionsRequestMarshaller.Instance;options.ResponseUnmarshaller = DescribeVpcEndpointServicePermissionsResponseUnmarshaller.Instance;return Invoke<DescribeVpcEndpointServicePermissionsResponse>(request, options);}",0
+"public static byte[] copyOfRange(byte[] original, int start, int end){if (start > end){throw new System.ArgumentException();}int originalLength = original.Length;if (start < 0 || start > originalLength){throw new System.IndexOutOfRangeException();}int resultLength = end - start;int copyLength = System.Math.Min(resultLength, originalLength - start);byte[] result = new byte[resultLength];System.Array.Copy(original, start, result, 0, copyLength);return result;}",0
+public ListTopicsRequest(string nextToken){_nextToken = nextToken;},0
+"public override void Finish(FieldInfos fis, int numDocs){if (!(pendingDocs.Count == 0)){Flush();}if (numDocs != this.numDocs){throw new Exception(""Wrote "" + this.numDocs + "" docs, finish called with numDocs="" + numDocs);}indexWriter.Finish(numDocs, vectorsStream.GetFilePointer());CodecUtil.WriteFooter(vectorsStream);}",0
+"public override bool IsIndexTerm(BytesRef term, TermStats stats){if (count >= interval){count = 1;return true;}else{count++;return false;}}",0
+"public virtual AssociateDhcpOptionsResponse AssociateDhcpOptions(AssociateDhcpOptionsRequest request){var options = new InvokeOptions();options.RequestMarshaller = AssociateDhcpOptionsRequestMarshaller.Instance;options.ResponseUnmarshaller = AssociateDhcpOptionsResponseUnmarshaller.Instance;return Invoke<AssociateDhcpOptionsResponse>(request, options);}",0
+"public override ValueEval Evaluate(int srcRowIndex, int srcColumnIndex, ValueEval arg0, ValueEval arg1,ValueEval arg2){return Evaluate(srcRowIndex, srcColumnIndex, arg0, arg1, arg2, DEFAULT_ARG3);}",0
+public virtual void Disconnect(){if (sock.IsConnected()){sock.Disconnect();}},0
+"public PredictionContext Add(PredictionContext ctx){if (ctx == PredictionContext.EMPTY)return PredictionContext.EMPTY;PredictionContext existing = cache.Get(ctx);if (existing != null){return existing;}cache.Put(ctx, ctx);return ctx;}",0
+"public virtual UploadLayerPartResponse UploadLayerPart(UploadLayerPartRequest request){var options = new InvokeOptions();options.RequestMarshaller = UploadLayerPartRequestMarshaller.Instance;options.ResponseUnmarshaller = UploadLayerPartResponseUnmarshaller.Instance;return Invoke<UploadLayerPartResponse>(request, options);}",0
+"public virtual string GetScriptText(){return GetScriptText(null, null);}",0
+public virtual DescribeClusterSubnetGroupsResponse DescribeClusterSubnetGroups(){return DescribeClusterSubnetGroups(new DescribeClusterSubnetGroupsRequest());},0
+"public override char SetIndex(int position){if (position < BeginIndex || position > EndIndex)throw new ArgumentException(""Illegal Position: "" + position);index = start + position;return Current;}",0
+"public virtual GetPhoneNumberOrderResponse GetPhoneNumberOrder(GetPhoneNumberOrderRequest request){var options = new InvokeOptions();options.RequestMarshaller = GetPhoneNumberOrderRequestMarshaller.Instance;options.ResponseUnmarshaller = GetPhoneNumberOrderResponseUnmarshaller.Instance;return Invoke<GetPhoneNumberOrderResponse>(request, options);}",0
+"public EpsilonTransition(ATNState target, int outermostPrecedenceReturn): base(target){this.outermostPrecedenceReturn = outermostPrecedenceReturn;}",0
+public virtual NGit.Api.DiffCommand SetContextLines(int contextLines){this.contextLines = contextLines;return this;},0
+"public virtual RejectVpcPeeringConnectionResponse RejectVpcPeeringConnection(RejectVpcPeeringConnectionRequest request){var options = new InvokeOptions();options.RequestMarshaller = RejectVpcPeeringConnectionRequestMarshaller.Instance;options.ResponseUnmarshaller = RejectVpcPeeringConnectionResponseUnmarshaller.Instance;return Invoke<RejectVpcPeeringConnectionResponse>(request, options);}",0
+"public static bool equals(int[] array1, int[] array2){if (array1 == array2){return true;}if (array1 == null || array2 == null || array1.Length != array2.Length){return false;}{for (int i = 0; i < array1.Length; i++){if (array1[i] != array2[i]){return false;}}}return true;}",0
+"public static void Main(string[] args){if (args.Length < 1){throw new ArgumentException();}QualityQueriesFinder qqf = new QualityQueriesFinder(FSDirectory.Open(new DirectoryInfo(args[0])));string[] q = qqf.BestQueries(""body"", 20);for (int i = 0; i < q.Length; i++){Console.WriteLine(newline + FormatQueryAsTrecTopic(i, q[i], null, null));}}",0
+"public CharsRef(char[] chars, int offset, int length){this.chars = chars;this.Offset = offset;this.Length = length;Debug.Assert(IsValid());}",0
+"public virtual UpdateIPSetResponse UpdateIPSet(UpdateIPSetRequest request){var options = new InvokeOptions();options.RequestMarshaller = UpdateIPSetRequestMarshaller.Instance;options.ResponseUnmarshaller = UpdateIPSetResponseUnmarshaller.Instance;return Invoke<UpdateIPSetResponse>(request, options);}",0
+public virtual void print(object obj){print(Sharpen.StringHelper.GetValueOf(obj));},0
+"public override string ToString(){return ""IndexFileDeleter.CommitPoint("" + segmentsFileName + "")"";}",0
+"public virtual bool WaitForGeneration(long targetGen, int maxMS){long curGen = writer.Generation;if (targetGen > curGen){throw new System.ArgumentException(""targetGen="" + targetGen + "" was never returned by the ReferenceManager instance (current gen="" + curGen + "")"");}lock (this)if (targetGen <= searchingGen)return true;else{waitingGen = Math.Max(waitingGen, targetGen);reopenCond.Set();available.Reset();}long startMS = Time.NanoTime() / 1000000;while (targetGen > Interlocked.Read(ref searchingGen)){if (maxMS < 0){available.WaitOne();}else{long msLeft = (startMS + maxMS) - (Time.NanoTime()) / 1000000;if (msLeft <= 0){return false;}else{available.WaitOne(TimeSpan.FromMilliseconds(msLeft));}}}return true;}",0
+"public java.lang.StringBuffer append(bool b){return append(b ? ""true"" : ""false"");}",0
