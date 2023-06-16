@@ -1,33 +1,14 @@
-import os
-import pandas as pd
-import re
 import torch
-import torch.nn as nn
-from torch.nn import CrossEntropyLoss
 from transformers import RobertaForSequenceClassification, RobertaConfig, get_linear_schedule_with_warmup, set_seed
-import numpy as np
 from transformers import AutoTokenizer, AutoModel
-from tqdm import tqdm
 from peft import PeftModel, PeftConfig
-import random
-from torch.utils.data import DataLoader, Dataset, SequentialSampler, RandomSampler,TensorDataset
-from scipy.special import softmax
-
-import string
-import tree_sitter
 from tree_sitter import Language, Parser
-import codecs
 from model import Model
 from test import test
-from train import InputFeatures, TextDataset
+from train import TextDataset
 from predict import predict
 from data_preprocessing import file_inner, obfuscate
-
-from sklearn.metrics import f1_score, accuracy_score, precision_score, recall_score
-import os
-from scipy.special import softmax
-from sklearn.metrics import classification_report
-from sklearn.metrics import confusion_matrix
+import pytest
 
 base = 'microsoft/unixcoder-base'  # 'microsoft/unixcoder-base' 'microsoft/codebert-base'
 model_id = "saved_models"  # '/kaggle/input/linevul-adapter' '/kaggle/input/unixcoder-adapter'
@@ -70,3 +51,4 @@ def file_without_vuls():
     string_data = obfuscate(parser, string_data)
     result = predict(model, tokenizer, string_data, device, do_linelevel_preds=True)
     assert sum(result['vulnerable']) == 0
+
