@@ -23,14 +23,6 @@ parser = Parser()
 CSHARP_LANGUAGE = Language('build/my-languages.so', 'c_sharp')
 parser.set_language(CSHARP_LANGUAGE)
 
-
-#Функция считывания файла
-def file_inner(path):
-    with codecs.open(path, 'r', 'utf-8') as file:
-        code = file.read()
-    return code
-
-
 #Удаление комментариев в коде, whitespace, приведение к одной строке
 def cleaner1(code):
     ## Remove code comments
@@ -53,12 +45,13 @@ def subnodes_by_type(node, node_type_pattern = ''):
     return nodes
 
 def add_line_delimiter(method):
-  method = method.replace(';', ';\n')
-  method = method.replace('{', '\n{\n')
-  method = method.replace('}', '}\n')
-  return method
+    method = method.replace(';', ';\n')
+    method = method.replace('{', '\n{\n')
+    method = method.replace('}', '}\n')
+    return method
 
 def obfuscate(parser, code, node_type_pattern='method_declaration'):
+    code = cleaner1(code)
     tree = parser.parse(bytes(code, 'utf8'))
     nodes = subnodes_by_type(tree.root_node, node_type_pattern)
     methods = []
@@ -91,7 +84,7 @@ def main():
     #Сохранение файлов
     train.to_csv('data/train.csv', index=False)
     test.to_csv('data/test.csv', index=False)
-    val.to_csv('data/test.csv', index=False)
+    val.to_csv('data/val.csv', index=False)
 
 if __name__ == "__main__":
     main()
