@@ -188,8 +188,8 @@ def main():
 
     # pretrain_model_path = "/kaggle/working/12heads_linevul_model.bin"
     base = 'microsoft/unixcoder-base' # 'microsoft/unixcoder-base' 'microsoft/codebert-base'
-    train_data_file = 'https://www.dropbox.com/s/qo9xw57upi4fvzb/Train_dataset_c%23.csv?dl=1'
-    eval_data_file = 'https://www.dropbox.com/s/4lq9huz9m1j5nun/Val_dataset_c%23.csv?dl=1'
+    train_data_file = 'data/train.csv'
+    eval_data_file = 'data/val.csv'
 
     tokenizer = AutoTokenizer.from_pretrained(base)
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')

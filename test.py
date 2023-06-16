@@ -81,7 +81,7 @@ def test(model, tokenizer, data, device, best_threshold = 0.5):
 def main():
     base = 'microsoft/unixcoder-base' # 'microsoft/unixcoder-base' 'microsoft/codebert-base'
     model_id = "saved_models"
-    test_data_file = 'https://www.dropbox.com/s/89a2qk9b6nplh2l/Test_dataset_c%23.csv?dl=1'
+    test_data_file = 'data/test.csv'
 
     tokenizer = AutoTokenizer.from_pretrained(base)
     device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
