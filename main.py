@@ -24,17 +24,6 @@ from model import Model
 from predict import predict
 from data_preprocessing import obfuscate
 
-#Настраиваем пул наших языков
-Language.build_library(
-  # Store the library in the `build` directory
-  'build/my-languages.so',
-
-  # Include one or more languages
-  [
-    'tree-sitter-c-sharp'
-  ]
-)
-
 #Настраиваем парсер для C#
 parser = Parser()
 CSHARP_LANGUAGE = Language('build/my-languages.so', 'c_sharp')
