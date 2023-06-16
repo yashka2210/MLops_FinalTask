@@ -7,22 +7,6 @@ import tree_sitter
 from tree_sitter import Language, Parser
 import codecs
 
-#Настраиваем пул наших языков
-Language.build_library(
-  # Store the library in the `build` directory
-  'build/my-languages.so',
-
-  # Include one or more languages
-  [
-    'tree-sitter-c-sharp'
-  ]
-)
-
-#Настраиваем парсер для C#
-parser = Parser()
-CSHARP_LANGUAGE = Language('build/my-languages.so', 'c_sharp')
-parser.set_language(CSHARP_LANGUAGE)
-
 #Удаление комментариев в коде, whitespace, приведение к одной строке
 def cleaner1(code):
     ## Remove code comments
