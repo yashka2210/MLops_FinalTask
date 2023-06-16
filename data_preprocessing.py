@@ -22,4 +22,4 @@ test, val = train_test_split(test, test_size=0.5, random_state=42)
 #Сохранение файлов
 train.to_csv('data/train.csv', index=False)
 test.to_csv('data/test.csv', index=False)
-val.to_csv('data/test.csv', index=False)
+val.to_csv('data/val.csv', index=False)
