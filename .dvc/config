@@ -1,7 +1,5 @@
 [core]
-    remote = remote
-['remote "remote"']
-    url = gdrive://1OVwAYnFdBEx-rMxAY8M8_chrlGl0drtW
+    remote = mlops_remote
 ['remote "mlops_remote"']
     url = s3://mlops
     endpointurl = https://storage.yandexcloud.net
