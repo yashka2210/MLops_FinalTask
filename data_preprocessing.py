@@ -55,7 +55,7 @@ def obfuscate(parser, code, node_type_pattern='method_declaration'):
 
 def main():
     # Загрузка датасета в Pandas
-    df = pd.read_csv('data/df_cs_vuls.csv.dvc')
+    df = pd.read_csv('data/df_cs_vuls.csv')
 
     # Проверим наличие дубликатов
     duplicateRows = df[df.duplicated()]
