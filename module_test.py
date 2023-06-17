@@ -4,7 +4,7 @@ from transformers import AutoTokenizer, AutoModel
 from peft import PeftModel, PeftConfig
 from tree_sitter import Language, Parser
 from model import Model
-from predict_for_test_data import test
+from predict_for_test_data import predict_for_test_data
 from train import TextDataset
 from predict import predict
 from data_preprocessing import file_inner, obfuscate
@@ -35,7 +35,7 @@ parser.set_language(CSHARP_LANGUAGE)
 def test_metrics():
     test_data_file = "data/test.csv"
     test_dataset = TextDataset(tokenizer, test_data_file=test_data_file, file_type='test')
-    result = test(model, tokenizer, test_dataset, device)
+    result = predict_for_test_data(model, tokenizer, test_dataset, device)
     assert (result['test_f1'] > 0.8)
 
 def test_file_with_vuls():
