@@ -1,5 +1,0 @@
-[core]
-    remote = mlops_datasets
-['remote "mlops_datasets"']
-    url = gdrive://1eC2GS4CAhj-dFKurAMCo7W3-HLvHgcvx
-    gdrive_acknowledge_abuse = true
