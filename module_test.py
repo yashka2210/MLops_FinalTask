@@ -4,7 +4,7 @@ from transformers import AutoTokenizer, AutoModel
 from peft import PeftModel, PeftConfig
 from tree_sitter import Language, Parser
 from model import Model
-from test import test
+from predict_for_test_data import test
 from train import TextDataset
 from predict import predict
 from data_preprocessing import file_inner, obfuscate
