@@ -97,7 +97,7 @@ def main():
     config = PeftConfig.from_pretrained(model_id)
     model = PeftModel.from_pretrained(model, model_id)
     test_dataset = TextDataset(tokenizer, test_data_file = test_data_file, file_type='test')
-    result = test(model, tokenizer, test_dataset, device)
+    result = predict_for_test_data(model, tokenizer, test_dataset, device)
 
 
 if __name__ == "__main__":
