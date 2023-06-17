@@ -1,0 +1,9 @@
+[core]
+    remote = remote
+['remote "remote"']
+    url = gdrive://1OVwAYnFdBEx-rMxAY8M8_chrlGl0drtW
+['remote "mlops_remote"']
+    url = s3://mlops
+    endpointurl = https://storage.yandexcloud.net
+    access_key_id = YCAJEGG1QS8hbEis5ZI89FqD1
+    secret_access_key = YCPMJBNV8X78tov2Y7RNDgXe-tnaSzPETGw1TbxQ
