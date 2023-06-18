@@ -16,7 +16,6 @@ from model import Model
 
 
 class Input(object):
-    """A single training/test features for a example."""
     def __init__(self,
                  input_tokens,
                  input_ids,
@@ -40,7 +39,6 @@ class TextData(Dataset):
 
     
 def cleaner(code):
-    ## Remove code comments
     pat = re.compile(r'(/\*([^*]|(\*+[^*/]))*\*+/)|(//.*)')
     code = re.sub(pat,'',code)
     code = re.sub('\r','',code)
@@ -70,14 +68,11 @@ def tokenize_samples(func, tokenizer, block_size = 512):
 
 
 def clean_special_token_values(all_values, padding=False):
-    # special token in the beginning of the seq 
     all_values[0] = 0
     if padding:
-        # get the last non-zero value which represents the att score for </s> token
         idx = [index for index, item in enumerate(all_values) if item != 0][-1]
         all_values[idx] = 0
     else:
-        # special token in the end of the seq 
         all_values[-1] = 0
     return all_values
 
@@ -94,21 +89,18 @@ def get_all_lines_score(word_att_scores: list):
     # verified_flaw_lines = [''.join(l) for l in verified_flaw_lines]
     # word_att_scores -> [[token, att_value], [token, att_value], ...]
     separator = ["Ċ", " Ċ", "ĊĊ", " ĊĊ"]
-    # to return
     all_lines_score = []
     score_sum = 0
     line_idx = 0
     flaw_line_indices = []
     line = ""
     for i in range(len(word_att_scores)):
-        # summerize if meet line separator or the last token
         if ((word_att_scores[i][0] in separator) or (i == (len(word_att_scores) - 1))) and score_sum != 0:
             score_sum += word_att_scores[i][1]
             all_lines_score.append(score_sum)
             line = ""
             score_sum = 0
             line_idx += 1
-        # else accumulate score
         elif word_att_scores[i][0] not in separator:
             line += word_att_scores[i][0]
             score_sum += word_att_scores[i][1]
@@ -122,21 +114,16 @@ def find_vul_lines(tokenizer, inputs_ids, attentions):
     all_tokens = [token.replace("ĉ", "Ċ") for token in all_tokens]
     original_lines = ''.join(all_tokens).split("Ċ")
     
-    # take from tuple then take out mini-batch attention values
     attentions = attentions[0][0]
     attention = None
-    # go into the layer
     for i in range(len(attentions)):
         layer_attention = attentions[i]
-        # summerize the values of each token dot other tokens
         layer_attention = sum(layer_attention)
         if attention is None:
             attention = layer_attention
         else:
             attention += layer_attention
-    # clean att score for <s> and </s>
     attention = clean_special_token_values(attention, padding=True)
-    # attention should be 1D tensor with seq length representing each token's attention value
     word_att_scores = get_word_att_scores(all_tokens=all_tokens, att_scores=attention)
     all_lines_score = get_all_lines_score(word_att_scores)
     all_lines_score_with_label = sorted(range(len(all_lines_score)), key=lambda i: all_lines_score[i], reverse=True)  
@@ -160,7 +147,6 @@ def predict(model, tokenizer, funcs, device, best_threshold = 0.5, do_linelevel_
         inputs_ids =  batch[0].to(device)
         func = batch[1]
         with torch.no_grad():
-            # attentions: a tuple with of one Tensor with 4D shape (batch_size, num_heads, sequence_length, sequence_length)
             logit, attentions = model(input_ids=inputs_ids, output_attentions=True)
             pred = logit.cpu().numpy()[0][1] > best_threshold
             if pred:
@@ -181,7 +167,6 @@ def predict(model, tokenizer, funcs, device, best_threshold = 0.5, do_linelevel_
         return result
     
 
-# for testing
 def main():
     base = 'microsoft/unixcoder-base' # 'microsoft/unixcoder-base' 'microsoft/codebert-base'
     model_id = "saved_models" #'/kaggle/input/linevul-adapter' '/kaggle/input/unixcoder-adapter'
