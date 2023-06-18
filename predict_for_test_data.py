@@ -30,10 +30,10 @@ from sklearn.metrics import confusion_matrix
 from model import Model
 from train import InputFeatures, TextDataset, cleaner, convert_examples_to_features, set_seed
 
-def predict_for_test_data(model, tokenizer, data, device, best_threshold = 0.5):  
+def predict_for_test_data(model, tokenizer, data, device, best_threshold=0.5):  
     test_sampler = SequentialSampler(data)
     test_dataloader = DataLoader(data, sampler=test_sampler, batch_size=1, num_workers=0)
-    eval_loss = 0.0
+    eval_loss=0.0
     model.eval()
     logits=[]  
     y_trues=[]
