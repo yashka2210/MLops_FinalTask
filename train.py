@@ -29,8 +29,8 @@ from sklearn.metrics import classification_report
 from sklearn.metrics import confusion_matrix
 from model import Model
 
+
 class InputFeatures(object):
-    """A single training/test features for a example."""
     def __init__(self,
                  input_tokens,
                  input_ids,
@@ -42,9 +42,10 @@ class InputFeatures(object):
         self.label=label
         self.original_func=original_func
         self.cwe=cwe
-              
+
+        
 class TextDataset(Dataset):
-    def __init__(self, tokenizer, train_data_file = None, eval_data_file = None, test_data_file = None,  file_type="train"):
+    def __init__(self, tokenizer, train_data_file=None, eval_data_file=None, test_data_file=None,  file_type="train"):
         if file_type == "train":
             file_path = train_data_file
         elif file_type == "eval":
@@ -71,6 +72,7 @@ class TextDataset(Dataset):
     def __getitem__(self, i):       
         return torch.tensor(self.examples[i].input_ids),torch.tensor(self.examples[i].label), str(self.examples[i].original_func), str(self.examples[i].cwe)
 
+    
 def cleaner(code):
     ## Remove code comments
     pat = re.compile(r'(/\*([^*]|(\*+[^*/]))*\*+/)|(//.*)')
@@ -81,8 +83,9 @@ def cleaner(code):
     code = [line.strip() for line in code if line.strip()]
     code = '\n'.join(code)
     return(code)
-     
-def convert_examples_to_features(func, label, tokenizer, cwe, block_size = 512):
+
+
+def convert_examples_to_features(func, label, tokenizer, cwe, block_size=512):
     clean_func = cleaner(func)
     code_tokens = tokenizer.tokenize(str(clean_func))[:block_size-2]
     source_tokens = [tokenizer.cls_token] + code_tokens + [tokenizer.sep_token]
@@ -92,7 +95,7 @@ def convert_examples_to_features(func, label, tokenizer, cwe, block_size = 512):
     return InputFeatures(source_tokens, source_ids, label, func, cwe)
 
 
-def set_seed(n_gpu, seed = 42):
+def set_seed(n_gpu, seed=42):
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
@@ -100,17 +103,15 @@ def set_seed(n_gpu, seed = 42):
         torch.cuda.manual_seed_all(seed)
 
 
-def train(model, tokenizer, train_dataset, eval_dataset, device, lr = 3e-4, train_batch_size = 1, eval_batch_size = 1, num_epochs = 1):
+def train(model, tokenizer, train_dataset, eval_dataset, device, lr=3e-4, train_batch_size=1, eval_batch_size=1, num_epochs=1):
     train_sampler = RandomSampler(train_dataset)
     train_dataloader = DataLoader(train_dataset, sampler=train_sampler, batch_size=train_batch_size, num_workers=0)
 
     eval_sampler = SequentialSampler(eval_dataset)
     eval_dataloader = DataLoader(eval_dataset, sampler=eval_sampler,batch_size=eval_batch_size,num_workers=0)
 
-
     optimizer = AdamW(params=model.parameters(), lr=lr)
 
-    # Instantiate scheduler
     lr_scheduler = get_linear_schedule_with_warmup(
         optimizer=optimizer,
         num_warmup_steps=0.06 * (len(train_dataloader) * num_epochs),
@@ -118,7 +119,6 @@ def train(model, tokenizer, train_dataset, eval_dataset, device, lr = 3e-4, trai
     )
     n_gpu = torch.cuda.device_count()
     
-    # training the model
     model.zero_grad()
     for epoch in range(num_epochs):
         bar = tqdm(train_dataloader,total=len(train_dataloader))
@@ -149,7 +149,6 @@ def train(model, tokenizer, train_dataset, eval_dataset, device, lr = 3e-4, trai
                 logits.append(logit.cpu().numpy())
                 y_trues.append(labels.cpu().numpy())
 
-        #calculate scores
         logits = np.concatenate(logits,0)
         y_trues = np.concatenate(y_trues,0)
         best_threshold = 0.5
@@ -169,13 +168,11 @@ def train(model, tokenizer, train_dataset, eval_dataset, device, lr = 3e-4, trai
         print("***** Eval results *****")
         for key in  sorted(result.keys()):
             print(key, str(round(result[key],4)))
-        #save model
         if result['eval_f1']>best_f1:
             best_f1=result['eval_f1']
             print("  "+"*"*20)  
             print("  Best f1:%s",round(best_f1,4))
             print("  "+"*"*20)                          
-
             output_dir = os.path.join('saved_models')                      
             if not os.path.exists(output_dir):
                 os.makedirs(output_dir)                        
@@ -185,7 +182,6 @@ def train(model, tokenizer, train_dataset, eval_dataset, device, lr = 3e-4, trai
     
 
 def main():
-
     # pretrain_model_path = "/kaggle/working/12heads_linevul_model.bin"
     base = 'microsoft/unixcoder-base' # 'microsoft/unixcoder-base' 'microsoft/codebert-base'
     train_data_file = 'data/train.csv'
